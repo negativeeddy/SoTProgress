@@ -14,7 +14,6 @@ You will get an output like this
 if you add the -i option you will only get the incomplete goals
 ![show incomplete goals](./docs/progress-incomplete.png)
 
+###### (and yes that's Fetcher's Rest as the background of my terminal.  #BeMorePirate 🏴‍☠️)
 
-
-
-(and yes that's Fetcher's Rest as the background of my terminal.  #BeMorePirate 🏴‍☠️)
+###### ((this is a totally unofficial personal project and is not approved by or associated with Rare or Xbox Games Studio))
