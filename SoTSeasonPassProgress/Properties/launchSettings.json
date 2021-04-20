@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SoTSeasonPassProgress": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\benwilli\\Desktop\\SotSeason2.json -i"
+    }
+  }
+}
