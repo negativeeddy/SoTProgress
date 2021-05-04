@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SoTSeasonPassProgress
+namespace NegativeEddy.SoT.Seasons
 {
-    public class SeasonPassProgress
+    public class SeasonProgress
     {
         public DateTime ActiveFrom { get; set; }
         public DateTime ActiveUntil { get; set; }

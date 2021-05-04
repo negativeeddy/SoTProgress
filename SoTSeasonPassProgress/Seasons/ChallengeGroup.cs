@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace SoTSeasonPassProgress
+namespace NegativeEddy.SoT.Seasons
 {
-    public class Challenge
+    public class ChallengeGroup
     {
-        public string GoalId { get; set; }
-        public int Threshold { get; set; }
-        public string XPGain { get; set; }
-        public string Category { get; set; }
-        public List<Goal> Goals { get; set; }
+        public string Id { get; set; }
+        public List<Challenge> Challenges { get; set; }
         public string Title { get; set; }
         public string Copy { get; set; }
         public Images Images { get; set; }
         public int ProgressValue { get; set; }
+        public int Threshold { get; set; }
         public float Percentage { get; set; }
         public bool isCompleted { get; set; }
     }
