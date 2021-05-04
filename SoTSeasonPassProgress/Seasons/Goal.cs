@@ -1,4 +1,4 @@
-﻿namespace SoTSeasonPassProgress
+﻿namespace NegativeEddy.SoT.Seasons
 {
     public class Goal
     {

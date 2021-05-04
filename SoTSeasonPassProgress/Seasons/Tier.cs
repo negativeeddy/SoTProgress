@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SoTSeasonPassProgress
+namespace NegativeEddy.SoT.Seasons
 {
     public class Tier
     {
