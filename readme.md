@@ -6,13 +6,18 @@ Your season progress can be found at https://www.seaofthieves.com/profile/season
 
 To run this file just call it with the json filepath
 ```
-SoTSeasonPassProgress.exe SotSeason2Progress.json
+SoTSeasonPassProgress.exe -s SotSeason2Progress.json
 ```
 You will get an output like this
 ![show all goals](./docs/progress-all.png)
 
 if you add the -i option you will only get the incomplete goals
 ![show incomplete goals](./docs/progress-incomplete.png)
+
+you can now process the Reputation (from the page https://www.seaofthieves.com/profile/reputation) by using the -r flag
+```
+SoTSeasonPassProgress.exe -r SotReputation.json
+```
 
 ###### (and yes that's Fetcher's Rest as the background of my terminal.  #BeMorePirate 🏴‍☠️)
 
