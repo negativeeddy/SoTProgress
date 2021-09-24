@@ -11,7 +11,7 @@ namespace NegativeEddy.SoT.Seasons
         public Images Images { get; set; }
         public int ProgressValue { get; set; }
         public int Threshold { get; set; }
-        public float Percentage { get; set; }
+        public float? Percentage { get; set; }
         public bool isCompleted { get; set; }
     }
 }

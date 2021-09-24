@@ -45,36 +45,48 @@ namespace NegativeEddy.SoT
         static void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)
         {
             string jsonString = File.ReadAllText(progressFilePath);
-            var seasonProgress = JsonSerializer.Deserialize<SeasonProgress>(jsonString);
+            var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString);
 
-            foreach (var group in seasonProgress.ChallengeGroups)
+            foreach (var season in seasons)
             {
-                char groupDone = group.isCompleted ? 'X' : ' ';
-                if (onlyIncomplete && groupDone == 'X')
-                {
-                    continue;
-                }
+                Console.WriteLine("===============================");
+                Console.WriteLine();
+                Console.WriteLine(season.ThemeId);
+                Console.WriteLine();
+                Console.WriteLine("===============================");
 
-                Console.WriteLine($"[{groupDone}] {group.Title}");
-                foreach (var challenge in group.Challenges)
+                Console.WriteLine();
+
+                foreach (var group in season.ChallengeGroups)
                 {
-                    char challengeDone = challenge.isCompleted ? 'X' : ' ';
-                    if (onlyIncomplete && challengeDone == 'X')
+                    char groupDone = group.isCompleted ? 'X' : ' ';
+                    if (onlyIncomplete && groupDone == 'X')
                     {
                         continue;
                     }
 
-                    Console.WriteLine($"{Indent}[{challengeDone}] {challenge.Title}");
-                    foreach (var goal in challenge.Goals)
+                    Console.WriteLine($"[{groupDone}] {group.Title}");
+                    foreach (var challenge in group.Challenges)
                     {
-                        char goalDone = goal.ProgressValue == goal.Threshold ? 'X' : ' ';
-                        if (onlyIncomplete && goalDone == 'X')
+                        char challengeDone = challenge.isCompleted ? 'X' : ' ';
+                        if (onlyIncomplete && challengeDone == 'X')
                         {
                             continue;
                         }
 
-                        Console.WriteLine($"{Indent}{Indent}[{goalDone}] {goal.ProgressValue:D}/{goal.Threshold:D} {goal.Title}");
+                        Console.WriteLine($"{Indent}[{challengeDone}] {challenge.Title}");
+                        foreach (var goal in challenge.Goals)
+                        {
+                            char goalDone = goal.ProgressValue == goal.Threshold ? 'X' : ' ';
+                            if (onlyIncomplete && goalDone == 'X')
+                            {
+                                continue;
+                            }
+
+                            Console.WriteLine($"{Indent}{Indent}[{goalDone}] {goal.ProgressValue:D}/{goal.Threshold:D} {goal.Title}");
+                        }
                     }
+                    Console.WriteLine();
                 }
             }
         }
