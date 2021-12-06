@@ -30,6 +30,18 @@ namespace NegativeEddy.SoT
                     {
                         ProcessReputationFile(opts.ReputationFilePath, opts.Incomplete);
                     }
+
+                    if (opts.SeasonFilePath == null && opts.ReputationFilePath == null)
+                    {
+                        Console.WriteLine(
+@"season or reputation file path missing. (--help for help)
+
+EXAMPLE USAGE: 
+SoTSeasonPassProgress.exe -h
+SoTSeasonPassProgress.exe -s seasons.json
+SoTSeasonPassProgress.exe -s seasons.json -i
+SoTSeasonPassProgress.exe -r reputation.json");
+                    }
                     return 0;
                 }
                 catch (Exception ex)
