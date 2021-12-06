@@ -63,7 +63,7 @@ SoTSeasonPassProgress.exe -r reputation.json");
             {
                 Console.WriteLine("===============================");
                 Console.WriteLine();
-                Console.WriteLine(season.ThemeId);
+                Console.WriteLine(season.Title);
                 Console.WriteLine();
                 Console.WriteLine("===============================");
 
