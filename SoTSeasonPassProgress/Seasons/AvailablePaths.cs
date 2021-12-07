@@ -1,9 +1,8 @@
-﻿namespace NegativeEddy.SoT.Seasons
+﻿namespace NegativeEddy.SoT.Seasons;
+
+public class AvailablePaths
 {
-    public class AvailablePaths
-    {
-        public bool Base { get; set; }
-        public bool Legendary { get; set; }
-        public bool SeasonPass { get; set; }
-    }
+    public bool Base { get; set; }
+    public bool Legendary { get; set; }
+    public bool SeasonPass { get; set; }
 }

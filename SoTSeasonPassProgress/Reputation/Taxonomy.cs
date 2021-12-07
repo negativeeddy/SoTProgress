@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace NegativeEddy.SoT.Reputation;
 
-namespace NegativeEddy.SoT.Reputation
+public class Taxonomy
 {
-    public class Taxonomy
-    {
-        public List<Tag> Tags { get; set; }
-    }
-
+    public List<Tag> Tags { get; set; }
 }

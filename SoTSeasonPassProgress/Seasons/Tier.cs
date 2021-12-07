@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace NegativeEddy.SoT.Seasons;
 
-namespace NegativeEddy.SoT.Seasons
+public class Tier
 {
-    public class Tier
-    {
-        public int Number { get; set; }
-        public string Title { get; set; }
-        public List<Level> Levels { get; set; }
-    }
+    public int Number { get; set; }
+    public string Title { get; set; }
+    public List<Level> Levels { get; set; }
 }

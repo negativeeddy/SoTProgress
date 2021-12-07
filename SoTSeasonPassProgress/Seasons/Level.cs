@@ -1,9 +1,8 @@
-﻿namespace NegativeEddy.SoT.Seasons
+﻿namespace NegativeEddy.SoT.Seasons;
+
+public class Level
 {
-    public class Level
-    {
-        public int Number { get; set; }
-        public Rewards Rewards { get; set; }
-        public RewardsV2 RewardsV2 { get; set; }
-    }
+    public int Number { get; set; }
+    public Rewards Rewards { get; set; }
+    public RewardsV2 RewardsV2 { get; set; }
 }
