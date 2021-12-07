@@ -37,7 +37,7 @@ namespace NegativeEddy.SoT
 @"season or reputation file path missing. (--help for help)
 
 EXAMPLE USAGE: 
-SoTSeasonPassProgress.exe -h
+SoTSeasonPassProgress.exe -help
 SoTSeasonPassProgress.exe -s seasons.json
 SoTSeasonPassProgress.exe -s seasons.json -i
 SoTSeasonPassProgress.exe -r reputation.json");
