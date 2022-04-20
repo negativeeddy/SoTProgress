@@ -2,6 +2,7 @@
 using NegativeEddy.SoT.Reputation;
 using NegativeEddy.SoT.Seasons;
 using SoTProgress.Adventures;
+using SoTProgress.MyChest;
 using System.Text.Json;
 
 namespace NegativeEddy.SoT;
@@ -38,6 +39,12 @@ class Program
                     fileProcessed = true;
                 }
 
+                if (opts.ChestFilePath is not null)
+                {
+                    ProcessChestFile(opts.ChestFilePath);
+                    fileProcessed = true;
+                }
+
                 if (!fileProcessed)
                 {
                     Console.WriteLine(
@@ -59,6 +66,37 @@ SoTProgress.exe -r reputation.json");
             }
         },
         errs => Task.FromResult(-1)); // Invalid arguments
+    }
+
+    private static void ProcessChestFile(string chestFilePath)
+    {
+        string jsonString = File.ReadAllText(chestFilePath);
+        var chest = JsonSerializer.Deserialize<MyChest>(jsonString);
+        foreach (var category in chest.chestData)
+        {
+            Console.WriteLine("===============================");
+            Console.WriteLine();
+            Console.WriteLine($"{category.Key}");
+            Console.WriteLine();
+            Console.WriteLine("===============================");
+
+            Console.WriteLine();
+
+            var itemGroups = category.Value.GroupBy(item => item.Taxonomy.Tags[0].Name).OrderBy(g=>g.Key);
+            foreach (var itemGroup in itemGroups)
+            {
+                Console.WriteLine(itemGroup.Key);
+
+                Console.WriteLine();
+
+                foreach (var item in itemGroup.OrderBy(i => i.title))
+                {
+                    Console.WriteLine($"{Indent}{item.title}");
+                }
+
+                Console.WriteLine();
+            }
+        }
     }
 
     private static void ProcessAdventureFile(string adventureFilePath, bool incomplete)
