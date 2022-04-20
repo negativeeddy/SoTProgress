@@ -1,6 +1,7 @@
 ﻿using CommandLine;
-using NegativeEddy.SoT.Seasons;
 using NegativeEddy.SoT.Reputation;
+using NegativeEddy.SoT.Seasons;
+using SoTProgress.Adventures;
 using System.Text.Json;
 
 namespace NegativeEddy.SoT;
@@ -16,26 +17,37 @@ class Program
         {
             try
             {
-                if (opts.SeasonFilePath != null)
+                bool fileProcessed = false;
+
+                if (opts.SeasonFilePath is not null)
                 {
-                        // We have the parsed arguments, so let's just pass them down
-                        ProcessProgressFile(opts.SeasonFilePath, opts.Incomplete);
-                }
-                if (opts.ReputationFilePath != null)
-                {
-                    ProcessReputationFile(opts.ReputationFilePath, opts.Incomplete);
+                    // We have the parsed arguments, so let's just pass them down
+                    ProcessProgressFile(opts.SeasonFilePath, opts.Incomplete);
+                    fileProcessed = true;
                 }
 
-                if (opts.SeasonFilePath == null && opts.ReputationFilePath == null)
+                if (opts.ReputationFilePath is not null)
+                {
+                    ProcessReputationFile(opts.ReputationFilePath, opts.Incomplete);
+                    fileProcessed = true;
+                }
+
+                if (opts.AdventureFilePath is not null)
+                {
+                    ProcessAdventureFile(opts.AdventureFilePath, opts.Incomplete);
+                    fileProcessed = true;
+                }
+
+                if (!fileProcessed)
                 {
                     Console.WriteLine(
 @"season or reputation file path missing. (--help for help)
 
 EXAMPLE USAGE: 
-SoTSeasonPassProgress.exe -help
-SoTSeasonPassProgress.exe -s seasons.json
-SoTSeasonPassProgress.exe -s seasons.json -i
-SoTSeasonPassProgress.exe -r reputation.json");
+SoTProgress.exe -help
+SoTProgress.exe -s seasons.json
+SoTProgress.exe -s seasons.json -i
+SoTProgress.exe -r reputation.json");
                 }
                 return 0;
             }
@@ -44,9 +56,55 @@ SoTSeasonPassProgress.exe -r reputation.json");
                 System.Diagnostics.Trace.WriteLine(ex);
                 Console.WriteLine("Error!");
                 return -3; // Unhandled error
-                }
+            }
         },
         errs => Task.FromResult(-1)); // Invalid arguments
+    }
+
+    private static void ProcessAdventureFile(string adventureFilePath, bool incomplete)
+    {
+        string jsonString = File.ReadAllText(adventureFilePath);
+        var adventures = JsonSerializer.Deserialize<Adventure[]>(jsonString);
+
+        foreach (var arc in adventures.SelectMany(x => x.Arcs))
+        {
+            Console.WriteLine("===============================");
+            Console.WriteLine();
+            Console.WriteLine($"{arc.Meta.Title}: {arc.Subtitle}");
+            Console.WriteLine();
+            Console.WriteLine("===============================");
+
+            Console.WriteLine("Mementos");
+            foreach (var item in arc.Mementos.Items)
+            {
+                if (!item.Progress.IsLocked && incomplete)
+                {
+                    continue;
+                }
+
+                char itemDone = item.Progress.IsLocked ? ' ' : 'X';
+                string itemTitle = item.Entitlement.Text;
+                Console.WriteLine($"{Indent}[{itemDone}] {itemTitle}: {item.Description}");
+            }
+
+            if (arc.Deeds?.Items?.Any() ?? false)
+            {
+                Console.WriteLine("Deeds");
+                foreach (var item in arc.Deeds.Items)
+                {
+                    if (!item.Progress.IsLocked && incomplete)
+                    {
+                        continue;
+                    }
+
+                    char itemDone = item.Progress.IsLocked ? ' ' : 'X';
+                    string itemTitle = item.Name;
+                    Console.WriteLine($"{Indent}[{itemDone}] {itemTitle}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
     }
 
     static void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)

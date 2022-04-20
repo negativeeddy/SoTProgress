@@ -4,6 +4,9 @@ namespace NegativeEddy.SoT;
 
 public class CommandLineOptions
 {
+    [Option(shortName: 'a', longName: "adventurefile", HelpText = "file path to Sea of Seasons adventure file")]
+    public string AdventureFilePath { get; set; }
+
     [Option(shortName: 's', longName: "seasonfile", HelpText = "file path to Sea of Seasons progress file")]
     public string SeasonFilePath { get; set; }
 
