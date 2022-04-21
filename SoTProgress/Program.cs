@@ -3,6 +3,7 @@ using NegativeEddy.SoT;
 using NegativeEddy.SoT.Reputation;
 using NegativeEddy.SoT.Seasons;
 using SoTProgress.Adventures;
+using SoTProgress.Leaderboard;
 using SoTProgress.MyChest;
 using System.Text.Json;
 
@@ -64,7 +65,45 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
 
 void ProcessLeaderboardFile(string leaderboardFilePath)
 {
-    Console.WriteLine("Coming soon...");
+    string jsonString = File.ReadAllText(leaderboardFilePath);
+    var boards = JsonSerializer.Deserialize<LeaderBoards>(jsonString);
+
+    var currentBoard = boards.current;
+    var userCurrent = currentBoard.global.user;
+
+    Console.WriteLine("===============================");
+    Console.WriteLine("You");
+    Console.WriteLine($"{Indent}Score: {userCurrent.score:N0}");
+    Console.WriteLine($"{Indent}Rank:  {userCurrent.rank:N0}");
+    Console.WriteLine();
+
+    foreach (var band in currentBoard.global.Bands.OrderBy(b => b.Index))
+    {
+        Console.WriteLine("===============================");
+        Console.WriteLine($"Emissary Band {band.Index}");
+
+        if (band.Results.Count > 1)
+        { 
+            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - {band.Results[^1].Score:N0}");
+            Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - {band.Results[^1].Rank:N0}");
+        }
+        else
+        {
+            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - 0");
+            Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - n/a");
+        }
+
+        var currentEntitlementTitle = band.Entitlements?.Current?.Title ?? "n/a";
+        Console.WriteLine($"{Indent}Reward: {currentEntitlementTitle}");
+
+        if (userCurrent.band == band.Index)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{Indent}You are HERE");
+            Console.WriteLine($"{Indent}You need {userCurrent.toNextRank:N0} more to get to the next level");
+        }
+        Console.WriteLine();
+    }
 }
 
 void ProcessChestFile(string chestFilePath)
