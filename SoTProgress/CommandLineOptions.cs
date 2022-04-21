@@ -26,7 +26,7 @@ public class CommandLineOptions
 @"season or reputation file path missing. (--help for help)
 
 EXAMPLE USAGE: 
-SoTProgress.exe -help
+SoTProgress.exe --help
 SoTProgress.exe -s seasons.json
 SoTProgress.exe -s seasons.json -i
 SoTProgress.exe -r reputation.json";
