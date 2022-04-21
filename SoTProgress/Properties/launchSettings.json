@@ -2,7 +2,7 @@
   "profiles": {
     "SoTSeasonPassProgress": {
       "commandName": "Project",
-      "commandLineArgs": "-c \"C:\\Users\\benwilli\\OneDrive - Microsoft\\Desktop\\SoT\\Rep\\chest.json\""
+      "commandLineArgs": "-a \"C:\\Users\\benwilli\\OneDrive - Microsoft\\Desktop\\SoT\\Rep\\adventures.json\""
     }
   }
 }

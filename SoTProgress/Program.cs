@@ -119,7 +119,7 @@ void ProcessAdventureFile(string adventureFilePath, bool incomplete)
                 continue;
             }
 
-            char itemDone = item.Progress.IsLocked ? ' ' : 'X';
+            char itemDone = item.Progress.CompletedAt.HasValue ? 'X' : ' ';
             string itemTitle = item.Entitlement.Text;
             Console.WriteLine($"{Indent}[{itemDone}] {itemTitle}: {item.Description}");
         }
@@ -134,7 +134,7 @@ void ProcessAdventureFile(string adventureFilePath, bool incomplete)
                     continue;
                 }
 
-                char itemDone = item.Progress.IsLocked ? ' ' : 'X';
+                char itemDone = item.Progress.CompletedAt.HasValue ? 'X' : ' ';
                 string itemTitle = item.Name;
                 Console.WriteLine($"{Indent}[{itemDone}] {itemTitle}");
             }
