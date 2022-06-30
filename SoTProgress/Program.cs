@@ -5,6 +5,7 @@ using NegativeEddy.SoT.Seasons;
 using SoTProgress.Adventures;
 using SoTProgress.Leaderboard;
 using SoTProgress.MyChest;
+using SoTProgress.Stats;
 using System.Text.Json;
 
 const string Indent = "    ";
@@ -47,6 +48,12 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
                     fileProcessed = true;
                 }
 
+                if (opts.StatsFilePath is not null)
+                {
+                    ProcessStatsFile(opts.StatsFilePath, opts.Incomplete);
+                    fileProcessed = true;
+                }
+
                 if (!fileProcessed)
                 {
                     Console.WriteLine(CommandLineOptions.HelpString);
@@ -62,6 +69,24 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
         },
         errs => Task.FromResult(-1)
         ); // Invalid arguments
+
+void ProcessStatsFile(string statsFilePath, bool onlyIncomplete) 
+{
+    string jsonString = File.ReadAllText(statsFilePath);
+    var statsRoot = JsonSerializer.Deserialize<StatsRoot>(jsonString);
+
+    var stats = statsRoot.stats;
+
+    Console.WriteLine("===============================");
+    Console.WriteLine("Stats");
+    Console.WriteLine($"{Indent}Chests Handed In: {stats.Chests_HandedIn_Total:n0}");
+    Console.WriteLine($"{Indent}Megs spawned: {stats.Player_TinyShark_Spawned:n0}");
+    Console.WriteLine($"{Indent}Times vomited: {stats.Vomited_Total:n0}");
+    Console.WriteLine($"{Indent}Meters sailed: {stats.Voyages_MetresSailed_Total:n0}");
+    Console.WriteLine($"{Indent}Krakens defeated: {stats.Combat_Kraken_Defeated:n0}");
+    Console.WriteLine($"{Indent}Ships sunk: {stats.Combat_Ships_Sunk:n0}");
+    Console.WriteLine();
+ }
 
 void ProcessLeaderboardFile(string leaderboardFilePath)
 {
@@ -187,7 +212,11 @@ void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(progressFilePath);
     var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString);
+    ProcessSeasons(seasons, onlyIncomplete);
+}
 
+void ProcessSeasons(IEnumerable<SeasonProgress> seasons, bool onlyIncomplete)
+{
     foreach (var season in seasons)
     {
         Console.WriteLine("===============================");
