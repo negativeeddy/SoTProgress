@@ -3,7 +3,9 @@ using NegativeEddy.SoT;
 using NegativeEddy.SoT.Reputation;
 using NegativeEddy.SoT.Seasons;
 using SoTProgress.Adventures;
+using SoTProgress.Leaderboard;
 using SoTProgress.MyChest;
+using SoTProgress.Stats;
 using System.Text.Json;
 
 const string Indent = "    ";
@@ -46,6 +48,12 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
                     fileProcessed = true;
                 }
 
+                if (opts.StatsFilePath is not null)
+                {
+                    ProcessStatsFile(opts.StatsFilePath, opts.Incomplete);
+                    fileProcessed = true;
+                }
+
                 if (!fileProcessed)
                 {
                     Console.WriteLine(CommandLineOptions.HelpString);
@@ -62,9 +70,65 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
         errs => Task.FromResult(-1)
         ); // Invalid arguments
 
+void ProcessStatsFile(string statsFilePath, bool onlyIncomplete) 
+{
+    string jsonString = File.ReadAllText(statsFilePath);
+    var statsRoot = JsonSerializer.Deserialize<StatsRoot>(jsonString);
+
+    var stats = statsRoot.stats;
+
+    Console.WriteLine("===============================");
+    Console.WriteLine("Stats");
+    Console.WriteLine($"{Indent}Chests Handed In: {stats.Chests_HandedIn_Total:n0}");
+    Console.WriteLine($"{Indent}Megs spawned: {stats.Player_TinyShark_Spawned:n0}");
+    Console.WriteLine($"{Indent}Times vomited: {stats.Vomited_Total:n0}");
+    Console.WriteLine($"{Indent}Meters sailed: {stats.Voyages_MetresSailed_Total:n0}");
+    Console.WriteLine($"{Indent}Krakens defeated: {stats.Combat_Kraken_Defeated:n0}");
+    Console.WriteLine($"{Indent}Ships sunk: {stats.Combat_Ships_Sunk:n0}");
+    Console.WriteLine();
+ }
+
 void ProcessLeaderboardFile(string leaderboardFilePath)
 {
-    Console.WriteLine("Coming soon...");
+    string jsonString = File.ReadAllText(leaderboardFilePath);
+    var boards = JsonSerializer.Deserialize<LeaderBoards>(jsonString);
+
+    var currentBoard = boards.current;
+    var userCurrent = currentBoard.global.user;
+
+    Console.WriteLine("===============================");
+    Console.WriteLine("You");
+    Console.WriteLine($"{Indent}Score: {userCurrent.score:N0}");
+    Console.WriteLine($"{Indent}Rank:  {userCurrent.rank:N0}");
+    Console.WriteLine();
+
+    foreach (var band in currentBoard.global.Bands.OrderBy(b => b.Index))
+    {
+        Console.WriteLine("===============================");
+        Console.WriteLine($"Emissary Band {band.Index}");
+
+        if (band.Results.Count > 1)
+        { 
+            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - {band.Results[^1].Score:N0}");
+            Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - {band.Results[^1].Rank:N0}");
+        }
+        else
+        {
+            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - 0");
+            Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - n/a");
+        }
+
+        var currentEntitlementTitle = band.Entitlements?.Current?.Title ?? "n/a";
+        Console.WriteLine($"{Indent}Reward: {currentEntitlementTitle}");
+
+        if (userCurrent.band == band.Index)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{Indent}You are HERE");
+            Console.WriteLine($"{Indent}You need {userCurrent.toNextRank:N0} more to get to the next level");
+        }
+        Console.WriteLine();
+    }
 }
 
 void ProcessChestFile(string chestFilePath)
@@ -148,7 +212,11 @@ void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(progressFilePath);
     var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString);
+    ProcessSeasons(seasons, onlyIncomplete);
+}
 
+void ProcessSeasons(IEnumerable<SeasonProgress> seasons, bool onlyIncomplete)
+{
     foreach (var season in seasons)
     {
         Console.WriteLine("===============================");
