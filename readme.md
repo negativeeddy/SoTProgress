@@ -15,10 +15,12 @@ if you add the -i option you will only get the incomplete goals
 ![show incomplete goals](./docs/progress-incomplete.png)
 
 you can now process the following additional pages for easy viewing
-* -r Reputation (from the page https://www.seaofthieves.com/profile/reputation) by using the -r flag
 * -a Adventures (https://www.seaofthieves.com/profile/adventures)
 * -c Your Chest (https://www.seaofthieves.com/profile/your-chest) 
-* -l Leaderboard (coming soon)
+* -l Leaderboard 
+* -r Reputation (from the page https://www.seaofthieves.com/profile/reputation)
+* -s Season progress
+* -t Stats file
 ```
 SoTProgress.exe -r SotReputation.json
 ```
