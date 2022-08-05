@@ -18,9 +18,12 @@ you can now process the following additional pages for easy viewing
 * -a Adventures (https://www.seaofthieves.com/profile/adventures)
 * -c Your Chest (https://www.seaofthieves.com/profile/your-chest) 
 * -l Leaderboard 
-* -r Reputation (from the page https://www.seaofthieves.com/profile/reputation)
-* -s Season progress
+* -r Reputation (https://www.seaofthieves.com/profile/reputation)
+* -s Season progress (https://www.seaofthieves.com/api/profilev2/seasons-progress)
 * -t Stats file
+* -C Captaincy file (https://www.seaofthieves.com/api/profilev2/captaincy)
+* -d show all details
+  * shows full stats for Captaincy
 ```
 SoTProgress.exe -r SotReputation.json
 ```

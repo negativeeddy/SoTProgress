@@ -4,6 +4,9 @@ namespace NegativeEddy.SoT;
 
 public class CommandLineOptions
 {
+    [Option(shortName: 'C', longName: "captaincyfile", HelpText = "file path to Sea of Thieves captaincy file")]
+    public string CaptaincyFilePath { get; set; }
+
     [Option(shortName: 'c', longName: "chestfile", HelpText = "file path to Sea of Thieves mychest file")]
     public string ChestFilePath { get; set; }
 
@@ -21,16 +24,19 @@ public class CommandLineOptions
     [Option(shortName: 'r', longName: "reputationFile", HelpText = "file path to Sea of Thieves reputation file")]
     public string ReputationFilePath { get; set; }
 
+    [Option(shortName: 'd', longName: "details", Required = false, HelpText = "Show full details when available", Default = false)]
+    public bool ShowDetails { get; set; }
+
     [Option(shortName: 'i', longName: "incompleteOnly", Required = false, HelpText = "Only show incompleted goals", Default = false)]
     public bool Incomplete { get; set; }
 
     public const string HelpString =
-@"season or reputation file path missing. (--help for help)
+@"Sea of Thieves data file path missing. (--help for help)
 
 EXAMPLE USAGE: 
 SoTProgress.exe --help
 SoTProgress.exe -s seasons.json
 SoTProgress.exe -s seasons.json -i
-SoTProgress.exe -r reputation.json";
-
+SoTProgress.exe -r reputation.json
+SoTProgress.exe -d -C captaincy.json";
 }
