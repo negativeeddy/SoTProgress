@@ -3,9 +3,11 @@ using NegativeEddy.SoT;
 using NegativeEddy.SoT.Reputation;
 using NegativeEddy.SoT.Seasons;
 using SoTProgress.Adventures;
+using SoTProgress.Captaincy;
 using SoTProgress.Leaderboard;
 using SoTProgress.MyChest;
 using SoTProgress.Stats;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 const string Indent = "    ";
@@ -51,6 +53,12 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
                 if (opts.StatsFilePath is not null)
                 {
                     ProcessStatsFile(opts.StatsFilePath, opts.Incomplete);
+                    fileProcessed = true;
+                }
+
+                if (opts.CaptaincyFilePath is not null)
+                {
+                    await ProcessCaptaincyFile(opts.CaptaincyFilePath, opts.ShowDetails);
                     fileProcessed = true;
                 }
 
@@ -114,7 +122,7 @@ void ProcessLeaderboardFile(string leaderboardFilePath)
         }
         else
         {
-            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - 0");
+            Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} t- 0");
             Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - n/a");
         }
 
@@ -129,6 +137,57 @@ void ProcessLeaderboardFile(string leaderboardFilePath)
         }
         Console.WriteLine();
     }
+}
+
+async Task ProcessCaptaincyFile(string filePath, bool showDetails)
+{
+    using Stream stream = File.OpenRead(filePath);
+    var capt = await JsonSerializer.DeserializeAsync<CaptaincyInfo>(stream);
+    stream.Close();
+
+    foreach(var ship in capt.Ships)
+    {
+        Console.WriteLine("===============================");
+        Console.WriteLine();
+        Console.WriteLine($"The {ship.Name} ({ship.Type}");
+        Console.WriteLine();
+        Console.WriteLine("===============================");
+        PrintAlignments(ship.Alignments, showDetails);
+    }
+
+    Console.WriteLine();
+    Console.WriteLine("===============================");
+    Console.WriteLine();
+    Console.WriteLine($"Pirate");
+    Console.WriteLine();
+    Console.WriteLine("===============================");
+    Console.WriteLine();
+    PrintAlignments(capt.Pirate.Alignments, showDetails);
+}
+
+void PrintAlignments(IEnumerable<Alignment> alignments, bool showDetails)
+{
+    foreach (var alignment in alignments)
+    {
+        Console.WriteLine();
+        Console.WriteLine(alignment.LocalisedTitle);
+        foreach (var acc in alignment.Accolades)
+        {
+            Console.WriteLine($"lvl {acc.MilestoneLevel}: {acc.CurrentProgress}/{acc.Threshold} {acc.LocalisedTitle}");
+            if (showDetails)
+            {
+                foreach(var stat in acc.Stats)
+                {
+                    Console.WriteLine($"{Indent}{stat.Value} {stat.LocalisedTitle}");
+                    foreach (var substat in stat.SubStats)
+                    {
+                        Console.WriteLine($"{Indent}{Indent}{substat.Value} {substat.LocalisedTitle}");
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 void ProcessChestFile(string chestFilePath)

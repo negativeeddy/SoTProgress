@@ -21,6 +21,9 @@ you can now process the following additional pages for easy viewing
 * -r Reputation (from the page https://www.seaofthieves.com/profile/reputation)
 * -s Season progress
 * -t Stats file
+* -C Captaincy file
+* -d show all details
+  * shows full stats for Captaincy
 ```
 SoTProgress.exe -r SotReputation.json
 ```
