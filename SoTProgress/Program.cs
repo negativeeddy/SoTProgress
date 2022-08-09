@@ -149,7 +149,7 @@ async Task ProcessCaptaincyFile(string filePath, bool showDetails)
     {
         Console.WriteLine("===============================");
         Console.WriteLine();
-        Console.WriteLine($"The {ship.Name} ({ship.Type}");
+        Console.WriteLine($"The {ship.Name} ({ship.Type})");
         Console.WriteLine();
         Console.WriteLine("===============================");
         PrintAlignments(ship.Alignments, showDetails);
