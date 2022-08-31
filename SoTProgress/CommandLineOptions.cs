@@ -16,9 +16,9 @@ public class CommandLineOptions
     [Option(shortName: 'a', longName: "adventurefile", HelpText = "file path to Sea of Thieves adventure file")]
     public string AdventureFilePath { get; set; }
 
-    [Option(shortName: 's', longName: "seasonfile", HelpText = "file path to Sea of Thieves progress file")]
-    public string StatsFilePath { get; set; }
     [Option(shortName: 't', longName: "statsfile", HelpText = "file path to Sea of Thieves stats file")]
+    public string StatsFilePath { get; set; }
+    [Option(shortName: 's', longName: "seasonfile", HelpText = "file path to Sea of Thieves progress file")]
     public string SeasonFilePath { get; set; }
 
     [Option(shortName: 'r', longName: "reputationFile", HelpText = "file path to Sea of Thieves reputation file")]
