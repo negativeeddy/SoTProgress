@@ -12,4 +12,6 @@ public class ReputationProgress
     public CampaignSet BilgeRats { get; set; }
     public CampaignSet TallTales { get; set; }
     public TradingCompany ReapersBones { get; set; }
+    public TradingCompany PirateLord { get; set; }
+    public TradingCompany Flameheart { get; set; }
 }

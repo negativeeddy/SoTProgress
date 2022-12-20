@@ -346,6 +346,8 @@ void ProcessReputationFile(string repFilePath, bool onlyIncomplete)
     ShowReputationForTradingCompany(passProgress.ReapersBones, "Reapers Bones", onlyIncomplete);
     ShowReputationForCampaigns(passProgress.TallTales, "Tall Tales", onlyIncomplete);
     ShowReputationForCampaigns(passProgress.BilgeRats, "Bilge Rats", onlyIncomplete);
+    ShowReputationForTradingCompany(passProgress.Flameheart, "Servants of the Flame", onlyIncomplete);
+    ShowReputationForTradingCompany(passProgress.PirateLord, "Guardians of Fortune", onlyIncomplete);
 }
 
 void ShowReputationForCampaigns(CampaignSet tallTales, string name, bool onlyIncomplete)
