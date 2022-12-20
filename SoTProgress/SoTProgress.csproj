@@ -4,6 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Copyright>Copyright (C) 2021 Ben Williams</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
