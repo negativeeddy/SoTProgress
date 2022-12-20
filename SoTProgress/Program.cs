@@ -40,7 +40,7 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
 
                 if (opts.ChestFilePath is not null)
                 {
-                    ProcessChestFile(opts.ChestFilePath);
+                    ProcessChestFile(opts.ChestFilePath, opts.FilterString);
                     fileProcessed = true;
                 }
 
@@ -190,7 +190,7 @@ void PrintAlignments(IEnumerable<Alignment> alignments, bool showDetails)
 
 }
 
-void ProcessChestFile(string chestFilePath)
+void ProcessChestFile(string chestFilePath, string? filter)
 {
     string jsonString = File.ReadAllText(chestFilePath);
     var chest = JsonSerializer.Deserialize<MyChest>(jsonString);
@@ -205,15 +205,29 @@ void ProcessChestFile(string chestFilePath)
         Console.WriteLine();
 
         var itemGroups = category.Value.GroupBy(item => item.Taxonomy.Tags[0].Name).OrderBy(g => g.Key);
+
         foreach (var itemGroup in itemGroups)
         {
             Console.WriteLine(itemGroup.Key);
 
             Console.WriteLine();
 
-            foreach (var item in itemGroup.OrderBy(i => i.title))
+            var filteredGroup = itemGroup;
+            if (filter is not null)
             {
-                Console.WriteLine($"{Indent}{item.title}");
+                foreach (var item in itemGroup
+                                     .Where(i => i.title.Contains(filter))
+                                     .OrderBy(i => i.title))
+                {
+                    Console.WriteLine($"{Indent}{item.title}");
+                }
+            }
+            else
+            {
+                foreach (var item in itemGroup.OrderBy(i => i.title))
+                {
+                    Console.WriteLine($"{Indent}{item.title}");
+                }
             }
 
             Console.WriteLine();

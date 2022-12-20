@@ -30,6 +30,9 @@ public class CommandLineOptions
     [Option(shortName: 'i', longName: "incompleteOnly", Required = false, HelpText = "Only show incompleted goals", Default = false)]
     public bool Incomplete { get; set; }
 
+    [Option(shortName: 'f', longName: "filter", Required = false, HelpText = "Only show items that contain the filter text", Default = null)]
+    public string? FilterString { get; set; }
+
     public const string HelpString =
 @"Sea of Thieves data file path missing. (--help for help)
 
