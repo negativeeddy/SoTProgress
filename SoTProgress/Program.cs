@@ -7,7 +7,6 @@ using SoTProgress.Captaincy;
 using SoTProgress.Leaderboard;
 using SoTProgress.MyChest;
 using SoTProgress.Stats;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 const string Indent = "    ";
@@ -78,7 +77,7 @@ return await Parser.Default.ParseArguments<CommandLineOptions>(args)
         errs => Task.FromResult(-1)
         ); // Invalid arguments
 
-void ProcessStatsFile(string statsFilePath, bool onlyIncomplete) 
+void ProcessStatsFile(string statsFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(statsFilePath);
     var statsRoot = JsonSerializer.Deserialize<StatsRoot>(jsonString);
@@ -94,7 +93,7 @@ void ProcessStatsFile(string statsFilePath, bool onlyIncomplete)
     Console.WriteLine($"{Indent}Krakens defeated: {stats.Combat_Kraken_Defeated:n0}");
     Console.WriteLine($"{Indent}Ships sunk: {stats.Combat_Ships_Sunk:n0}");
     Console.WriteLine();
- }
+}
 
 void ProcessLeaderboardFile(string leaderboardFilePath)
 {
@@ -116,7 +115,7 @@ void ProcessLeaderboardFile(string leaderboardFilePath)
         Console.WriteLine($"Emissary Band {band.Index}");
 
         if (band.Results.Count > 1)
-        { 
+        {
             Console.WriteLine($"{Indent}Score:  {band.Results[0].Score:N0} - {band.Results[^1].Score:N0}");
             Console.WriteLine($"{Indent}Rank:   {band.Results[0].Rank:N0} - {band.Results[^1].Rank:N0}");
         }
@@ -145,7 +144,7 @@ async Task ProcessCaptaincyFile(string filePath, bool showDetails)
     var capt = await JsonSerializer.DeserializeAsync<CaptaincyInfo>(stream);
     stream.Close();
 
-    foreach(var ship in capt.Ships)
+    foreach (var ship in capt.Ships)
     {
         Console.WriteLine("===============================");
         Console.WriteLine();
@@ -176,7 +175,7 @@ void PrintAlignments(IEnumerable<Alignment> alignments, bool showDetails)
             Console.WriteLine($"lvl {acc.MilestoneLevel}: {acc.CurrentProgress}/{acc.Threshold} {acc.LocalisedTitle}");
             if (showDetails)
             {
-                foreach(var stat in acc.Stats)
+                foreach (var stat in acc.Stats)
                 {
                     Console.WriteLine($"{Indent}{stat.Value} {stat.LocalisedTitle}");
                     foreach (var substat in stat.SubStats)
@@ -337,21 +336,23 @@ void ProcessSeasons(IEnumerable<SeasonProgress> seasons, bool onlyIncomplete)
 void ProcessReputationFile(string repFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(repFilePath);
-    var passProgress = JsonSerializer.Deserialize<Dictionary<string, TradingCompany>>(jsonString) ??  new Dictionary<string, TradingCompany>();
+    var passProgress = JsonSerializer.Deserialize<Dictionary<string, TradingCompany>>(jsonString) ?? new Dictionary<string, TradingCompany>();
 
-    foreach(var companyKV in passProgress)
+    foreach (var companyKV in passProgress)
     {
         var company = companyKV.Value;
-        ShowReputationForTradingCompany(company, companyKV.Key, onlyIncomplete);
+        ShowReputationForTradingCompany(company, companyKV.Key.SpacesForCamelCase(), onlyIncomplete);
 
         if (company.Campaigns is not null)
         {
-            ShowReputationForCampaigns(company.Campaigns, "XXXX", onlyIncomplete);
+            ShowReputationForCampaigns(company.Campaigns, onlyIncomplete);
         }
+        
+        Console.WriteLine();
     }
 }
 
-void ShowReputationForCampaigns(Dictionary<string, Campaign> campaigns, string name, bool onlyIncomplete)
+void ShowReputationForCampaigns(Dictionary<string, Campaign> campaigns, bool onlyIncomplete)
 {
     foreach (var tale in campaigns)
     {
@@ -378,7 +379,6 @@ void ShowReputationForTradingCompany(TradingCompany tradingCompany, string name,
     {
         PrintEmblems(tradingCompany.Emblems.Emblems, onlyIncomplete, 1);
     }
-
 }
 
 void PrintEmblems(IEnumerable<Emblem> emblems, bool onlyIncomplete, int indent)
