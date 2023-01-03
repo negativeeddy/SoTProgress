@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "SoTSeasonPassProgress": {
+    "SoTSeasonPassProgress -d -r": {
       "commandName": "Project",
-      "commandLineArgs": "-d -C \"C:\\Users\\benwilli\\OneDrive - Microsoft\\Desktop\\SoT\\Rep\\captaincy.json\""
+      "commandLineArgs": "-d -r \"C:\\Users\\benwilli\\OneDrive - Microsoft\\Desktop\\SoT\\Rep\\reputation.json\""
+    },
+    "SoTSeasonPassProgress -d -r -i": {
+      "commandName": "Project",
+      "commandLineArgs": "-d -r \"C:\\Users\\benwilli\\OneDrive - Microsoft\\Desktop\\SoT\\Rep\\reputation.json\" -i"
     }
   }
 }
