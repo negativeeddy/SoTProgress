@@ -2,7 +2,7 @@
 
 namespace NegativeEddy.SoT.Reputation;
 
-public class Emblem
+public record Emblem
 {
     public required string Image { get; set; }
     public required string DisplayName { get; set; }

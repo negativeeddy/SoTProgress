@@ -1,6 +1,6 @@
 ﻿namespace NegativeEddy.SoT.Reputation;
 
-public class EmblemInfo
+public record EmblemInfo
 {
     public int EmblemsTotal { get; set; }
     public int EmblemsUnlocked { get; set; }

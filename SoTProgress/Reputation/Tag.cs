@@ -3,7 +3,7 @@
 namespace NegativeEddy.SoT.Reputation;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
-public class Tag
+public record Tag
 {
     [JsonPropertyName("#Name")]
     public required string Name { get; set; }

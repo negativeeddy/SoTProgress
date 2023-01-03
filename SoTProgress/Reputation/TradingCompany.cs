@@ -1,6 +1,6 @@
 ﻿namespace NegativeEddy.SoT.Reputation;
 
-public class TradingCompany
+public record TradingCompany
 {
     public required string Motto { get; set; }
     public string? Rank { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace NegativeEddy.SoT.Reputation;
 
-public class Taxonomy
+public record Taxonomy
 {
     public required List<Tag> Tags { get; set; }
 }

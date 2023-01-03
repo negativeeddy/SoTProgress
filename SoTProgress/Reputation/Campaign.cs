@@ -1,6 +1,6 @@
 ﻿namespace NegativeEddy.SoT.Reputation;
 
-public class Campaign
+public record Campaign
 {
     public required string Title { get; set; }
     public required string Desc { get; set; }
