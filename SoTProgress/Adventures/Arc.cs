@@ -2,12 +2,12 @@
 
 public class Arc
 {
-    public Meta Meta { get; set; }
-    public string Title { get; set; }
-    public string Subtitle { get; set; }
+    public required Meta Meta { get; set; }
+    public required string Title { get; set; }
+    public required string Subtitle { get; set; }
     public DateTime Time { get; set; }
-    public string State { get; set; }
-    public Story Story { get; set; }
-    public Deeds Deeds { get; set; }
-    public Mementos Mementos { get; set; }
+    public required string State { get; set; }
+    public required Story Story { get; set; }
+    public required Deeds Deeds { get; set; }
+    public required Mementos Mementos { get; set; }
 }

@@ -2,7 +2,7 @@
 {
     public class Achievements
     {
-        public SortedAchievement[] sorted { get; set; }
-        public Achievement[] latest { get; set; }
+        public required SortedAchievement[] sorted { get; set; }
+        public required Achievement[] latest { get; set; }
     }
 }

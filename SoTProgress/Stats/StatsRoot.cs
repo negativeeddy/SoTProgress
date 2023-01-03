@@ -4,8 +4,8 @@ namespace SoTProgress.Stats
 {
     public class StatsRoot
     {
-        public Stats stats { get; set; }
-        public Achievements achievements { get; set; }
-        public SeasonProgress[] seasons { get; set; }
+        public required Stats stats { get; set; }
+        public required Achievements achievements { get; set; }
+        public required SeasonProgress[] seasons { get; set; }
     }
 }

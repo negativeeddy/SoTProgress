@@ -2,5 +2,5 @@
 
 public class Taxonomy
 {
-    public List<Tag> Tags { get; set; }
+    public required List<Tag> Tags { get; set; }
 }

@@ -83,7 +83,7 @@ void ProcessStatsFile(string statsFilePath, bool onlyIncomplete)
     string jsonString = File.ReadAllText(statsFilePath);
     var statsRoot = JsonSerializer.Deserialize<StatsRoot>(jsonString);
 
-    var stats = statsRoot.stats;
+    var stats = statsRoot!.stats;
 
     Console.WriteLine("===============================");
     Console.WriteLine("Stats");
@@ -101,7 +101,7 @@ void ProcessLeaderboardFile(string leaderboardFilePath)
     string jsonString = File.ReadAllText(leaderboardFilePath);
     var boards = JsonSerializer.Deserialize<LeaderBoards>(jsonString);
 
-    var currentBoard = boards.current;
+    var currentBoard = boards!.current;
     var userCurrent = currentBoard.global.user;
 
     Console.WriteLine("===============================");
@@ -194,7 +194,7 @@ void ProcessChestFile(string chestFilePath, string? filter)
 {
     string jsonString = File.ReadAllText(chestFilePath);
     var chest = JsonSerializer.Deserialize<MyChest>(jsonString);
-    foreach (var category in chest.chestData)
+    foreach (var category in chest!.chestData)
     {
         Console.WriteLine("===============================");
         Console.WriteLine();
@@ -240,7 +240,7 @@ void ProcessAdventureFile(string adventureFilePath, bool incomplete)
     string jsonString = File.ReadAllText(adventureFilePath);
     var adventures = JsonSerializer.Deserialize<Adventure[]>(jsonString);
 
-    foreach (var arc in adventures.SelectMany(x => x.Arcs))
+    foreach (var arc in adventures!.SelectMany(x => x.Arcs))
     {
         Console.WriteLine("===============================");
         Console.WriteLine();
@@ -284,7 +284,7 @@ void ProcessAdventureFile(string adventureFilePath, bool incomplete)
 void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(progressFilePath);
-    var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString);
+    var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString) ?? new SeasonProgress[0];
     ProcessSeasons(seasons, onlyIncomplete);
 }
 
@@ -337,30 +337,23 @@ void ProcessSeasons(IEnumerable<SeasonProgress> seasons, bool onlyIncomplete)
 void ProcessReputationFile(string repFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(repFilePath);
-    var passProgress = JsonSerializer.Deserialize<ReputationProgress>(jsonString);
+    var passProgress = JsonSerializer.Deserialize<Dictionary<string, TradingCompany>>(jsonString) ??  new Dictionary<string, TradingCompany>();
 
-    ShowReputationForTradingCompany(passProgress.AthenasFortune, "Athena's Fortune", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.OrderOfSouls, "Order of Souls", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.GoldHoarders, "Gold Hoarders", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.MerchantAlliance, "Merchant Alliance", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.ReapersBones, "Reapers Bones", onlyIncomplete);
-    ShowReputationForCampaigns(passProgress.TallTales, "Tall Tales", onlyIncomplete);
-    ShowReputationForCampaigns(passProgress.BilgeRats, "Bilge Rats", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.Flameheart, "Servants of the Flame", onlyIncomplete);
-    ShowReputationForTradingCompany(passProgress.PirateLord, "Guardians of Fortune", onlyIncomplete);
+    foreach(var companyKV in passProgress)
+    {
+        var company = companyKV.Value;
+        ShowReputationForTradingCompany(company, companyKV.Key, onlyIncomplete);
+
+        if (company.Campaigns is not null)
+        {
+            ShowReputationForCampaigns(company.Campaigns, "XXXX", onlyIncomplete);
+        }
+    }
 }
 
-void ShowReputationForCampaigns(CampaignSet tallTales, string name, bool onlyIncomplete)
+void ShowReputationForCampaigns(Dictionary<string, Campaign> campaigns, string name, bool onlyIncomplete)
 {
-    char allTalesDone = tallTales.EmblemsTotal == tallTales.EmblemsUnlocked ? 'X' : ' ';
-    Console.WriteLine($"[{allTalesDone}] {name}");
-
-    if (allTalesDone == 'X')
-    {
-        return;
-    }
-
-    foreach (var tale in tallTales.Campaigns)
+    foreach (var tale in campaigns)
     {
         string campaignName = tale.Key;
         Campaign compaign = tale.Value;
@@ -381,8 +374,11 @@ void ShowReputationForTradingCompany(TradingCompany tradingCompany, string name,
 {
     char companyDone = tradingCompany.EmblemsTotal == tradingCompany.EmblemsUnlocked ? 'X' : ' ';
     Console.WriteLine($"[{companyDone}] {name}");
+    if (tradingCompany.Emblems is not null)
+    {
+        PrintEmblems(tradingCompany.Emblems.Emblems, onlyIncomplete, 1);
+    }
 
-    PrintEmblems(tradingCompany.Emblems.Emblems, onlyIncomplete, 1);
 }
 
 void PrintEmblems(IEnumerable<Emblem> emblems, bool onlyIncomplete, int indent)

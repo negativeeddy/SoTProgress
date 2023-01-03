@@ -2,8 +2,8 @@
 
 public class LeaderBoardCategory
 {
-    public List<Band> Bands { get; set; }
-    public User user { get; set; }
-    public DateTime EndDate { get; set; }
+    public required List<Band> Bands { get; set; }
+    public required User user { get; set; }
+    public required DateTime EndDate { get; set; }
 }
 

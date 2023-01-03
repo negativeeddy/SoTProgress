@@ -2,6 +2,6 @@
 
 public class Deeds
 {
-    public BackgroundImage BackgroundImage { get; set; }
-    public Item[] Items { get; set; }
+    public required BackgroundImage BackgroundImage { get; set; }
+    public required Item[] Items { get; set; }
 }

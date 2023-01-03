@@ -4,9 +4,9 @@ namespace NegativeEddy.SoT.Reputation;
 
 public class Emblem
 {
-    public string Image { get; set; }
-    public string DisplayName { get; set; }
-    public string Description { get; set; }
+    public required string Image { get; set; }
+    public required string DisplayName { get; set; }
+    public required string Description { get; set; }
     public bool Completed { get; set; }
     public int Grade { get; set; }
     public int MaxGrade { get; set; }
@@ -15,15 +15,15 @@ public class Emblem
     public bool HasScalar { get; set; }
 
     [JsonPropertyName("#Type")]
-    public string Type { get; set; }
+    public required string Type { get; set; }
 
     [JsonPropertyName("#Name")]
-    public string Name { get; set; }
-    public Taxonomy Taxonomy { get; set; }
+    public required string Name { get; set; }
+    public required Taxonomy Taxonomy { get; set; }
     public bool locked { get; set; }
-    public string image { get; set; }
-    public string title { get; set; }
-    public string subtitle { get; set; }
+    public required string image { get; set; }
+    public required string title { get; set; }
+    public required string subtitle { get; set; }
     public double size { get; set; }
     public bool suppressProgress { get; set; }
     public bool? HasLockedImage { get; set; }

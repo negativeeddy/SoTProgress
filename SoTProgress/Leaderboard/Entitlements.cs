@@ -2,8 +2,8 @@
 
 public class Entitlements
 {
-    public Entitlement Next { get; set; }
-    public Entitlement Current { get; set; }
-    public Entitlement Previous { get; set; }
+    public required Entitlement Next { get; set; }
+    public required Entitlement Current { get; set; }
+    public required Entitlement Previous { get; set; }
 }
 

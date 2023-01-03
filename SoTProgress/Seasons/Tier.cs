@@ -3,6 +3,6 @@
 public class Tier
 {
     public int Number { get; set; }
-    public string Title { get; set; }
-    public List<Level> Levels { get; set; }
+    public required string Title { get; set; }
+    public required List<Level> Levels { get; set; }
 }

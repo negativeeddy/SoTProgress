@@ -2,7 +2,7 @@
 
 public class Story
 {
-    public BackgroundImage BackgroundImage { get; set; }
-    public string Header { get; set; }
-    public Section[] Sections { get; set; }
+    public required BackgroundImage BackgroundImage { get; set; }
+    public required string Header { get; set; }
+    public required Section[] Sections { get; set; }
 }

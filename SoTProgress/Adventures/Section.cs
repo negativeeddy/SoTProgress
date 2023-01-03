@@ -2,7 +2,7 @@
 
 public class Section
 {
-    public string Description { get; set; }
-    public string ProgressId { get; set; }
-    public Progress Progress { get; set; }
+    public required string Description { get; set; }
+    public required string ProgressId { get; set; }
+    public required Progress Progress { get; set; }
 }

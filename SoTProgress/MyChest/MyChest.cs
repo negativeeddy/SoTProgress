@@ -2,6 +2,6 @@
 
 public class MyChest
 {
-    public Dictionary<string, ChestItem[]> chestData { get; set; }
-    public Dictionary<string,string[]> categoryMap { get; set; }
+    public required Dictionary<string, ChestItem[]> chestData { get; set; }
+    public required Dictionary<string,string[]> categoryMap { get; set; }
 }

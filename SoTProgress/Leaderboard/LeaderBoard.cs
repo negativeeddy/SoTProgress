@@ -2,8 +2,8 @@
 
 public class LeaderBoard
 {
-    public LeaderBoardCategory global { get; set; }
-    public LeaderBoardCategory friends { get; set; }
-    public LeaderBoardCategory top { get; set; }
+    public required LeaderBoardCategory global { get; set; }
+    public required LeaderBoardCategory friends { get; set; }
+    public required LeaderBoardCategory top { get; set; }
 }
 

@@ -2,9 +2,9 @@
 
 public class Result
 {
-    public string GamerTag { get; set; }
-    public int Score { get; set; }
-    public int Rank { get; set; }
+    public required string GamerTag { get; set; }
+    public required int Score { get; set; }
+    public required int Rank { get; set; }
     public bool? IsRequestingUser { get; set; }
 }
 

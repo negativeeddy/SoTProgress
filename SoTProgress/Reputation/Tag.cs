@@ -6,8 +6,8 @@ namespace NegativeEddy.SoT.Reputation;
 public class Tag
 {
     [JsonPropertyName("#Name")]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("#Value")]
-    public string Value { get; set; }
+    public required string Value { get; set; }
 }

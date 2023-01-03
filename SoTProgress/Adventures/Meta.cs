@@ -2,7 +2,7 @@
 
 public class Meta
 {
-    public string Title { get; set; }
-    public string AdventureId { get; set; }
-    public string WebCode { get; set; }
+    public required string Title { get; set; }
+    public required string AdventureId { get; set; }
+    public required string WebCode { get; set; }
 }

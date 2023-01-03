@@ -2,5 +2,5 @@
 
 public class Paths
 {
-    public string Entitlement { get; set; }
+    public required string Entitlement { get; set; }
 }

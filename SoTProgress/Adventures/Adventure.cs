@@ -2,6 +2,6 @@
 
 public class Adventure
 {
-    public Arc[] Arcs { get; set; }
-    public Paths Paths { get; set; }
+    public required Arc[] Arcs { get; set; }
+    public required Paths Paths { get; set; }
 }
