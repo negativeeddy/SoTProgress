@@ -197,7 +197,7 @@ void ProcessChestFile(string chestFilePath, string? filter)
     {
         Console.WriteLine("===============================");
         Console.WriteLine();
-        Console.WriteLine($"{category.Key}");
+        Console.WriteLine($"{category.Key.SpacesForCamelCase()}");
         Console.WriteLine();
         Console.WriteLine("===============================");
 
@@ -207,7 +207,7 @@ void ProcessChestFile(string chestFilePath, string? filter)
 
         foreach (var itemGroup in itemGroups)
         {
-            Console.WriteLine(itemGroup.Key);
+            Console.WriteLine(itemGroup.Key.SpacesForCamelCase());
 
             Console.WriteLine();
 
@@ -283,12 +283,8 @@ void ProcessAdventureFile(string adventureFilePath, bool incomplete)
 void ProcessProgressFile(string progressFilePath, bool onlyIncomplete)
 {
     string jsonString = File.ReadAllText(progressFilePath);
-    var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString) ?? new SeasonProgress[0];
-    ProcessSeasons(seasons, onlyIncomplete);
-}
+    var seasons = JsonSerializer.Deserialize<SeasonProgress[]>(jsonString) ?? Array.Empty<SeasonProgress>();
 
-void ProcessSeasons(IEnumerable<SeasonProgress> seasons, bool onlyIncomplete)
-{
     foreach (var season in seasons)
     {
         Console.WriteLine("===============================");
