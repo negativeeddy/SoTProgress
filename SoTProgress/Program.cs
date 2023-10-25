@@ -207,29 +207,24 @@ void ProcessChestFile(string chestFilePath, string? filter)
 
         foreach (var itemGroup in itemGroups)
         {
-            Console.WriteLine(itemGroup.Key.SpacesForCamelCase());
+            var filteredGroup = ((filter is not null)
+                                ? itemGroup.Where(i => i.title.Contains(filter, StringComparison.InvariantCultureIgnoreCase))
+                                : itemGroup)
+                                .ToArray();
 
-            Console.WriteLine();
-
-            var filteredGroup = itemGroup;
-            if (filter is not null)
+            if (filteredGroup.Length > 0)
             {
-                foreach (var item in itemGroup
-                                     .Where(i => i.title.Contains(filter))
-                                     .OrderBy(i => i.title))
+                Console.WriteLine(itemGroup.Key.SpacesForCamelCase());
+
+                Console.WriteLine();
+
+                foreach (var item in filteredGroup.OrderBy(i => i.title))
                 {
                     Console.WriteLine($"{Indent}{item.title}");
                 }
-            }
-            else
-            {
-                foreach (var item in itemGroup.OrderBy(i => i.title))
-                {
-                    Console.WriteLine($"{Indent}{item.title}");
-                }
-            }
 
-            Console.WriteLine();
+                Console.WriteLine();
+            }
         }
     }
 }
@@ -343,7 +338,7 @@ void ProcessReputationFile(string repFilePath, bool onlyIncomplete)
         {
             ShowReputationForCampaigns(company.Campaigns, onlyIncomplete);
         }
-        
+
         Console.WriteLine();
     }
 }

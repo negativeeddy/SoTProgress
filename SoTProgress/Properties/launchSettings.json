@@ -7,6 +7,10 @@
     "SoTSeasonPassProgress -d -r -i": {
       "commandName": "Project",
       "commandLineArgs": "-d -r \"..\\..\\..\\..\\samples\\reputation.json\" -i"
+    },
+    "SoTSeasonPassProgress -c -i -f": {
+      "commandName": "Project",
+      "commandLineArgs": "-c \"..\\..\\..\\..\\samples\\chest.json\" -i -f bone"
     }
   }
 }
